@@ -1,0 +1,36 @@
+{
+  "run_id": "agentic_loop_20261009_120000",
+  "timestamp": "2026-10-09T08:04:52.600759",
+  "claims_processed": 3,
+  "decisions": [
+    {
+      "claim_id": "CLM001",
+      "claim_type": "medical",
+      "decision": "approved",
+      "tier": 1,
+      "reason": "Auto-approved: Low value, standard processing"
+    },
+    {
+      "claim_id": "CLM002",
+      "claim_type": "automotive",
+      "decision": "approved",
+      "tier": 2,
+      "reason": "Routed to tier 2 for review"
+    },
+    {
+      "claim_id": "CLM003",
+      "claim_type": "liability",
+      "decision": "escalated",
+      "tier": 3,
+      "reason": "Escalated: Priority CRITICAL or high value"
+    }
+  ],
+  "statistics": {
+    "total_processed": 3,
+    "traces_available": 3,
+    "avg_turns": 6.0,
+    "termination_reasons": {
+      "end_turn": 3
+    }
+  }
+}

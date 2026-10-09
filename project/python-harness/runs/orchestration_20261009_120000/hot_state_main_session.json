@@ -1,0 +1,13 @@
+{
+  "session_id": "main_session",
+  "recent_defects": [
+    "DEF001",
+    "DEF002",
+    "DEF003"
+  ],
+  "active_defects": [
+    "DEF001"
+  ],
+  "last_updated": "2026-10-09 08:04:53.572510",
+  "version": 5
+}

@@ -1,0 +1,41 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.14, pytest-8.0.0, pluggy-1.6.0 -- /usr/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /voc/work/cd14715-claude-code-classroom/python-harness
+configfile: pytest.ini
+plugins: cov-4.1.0, anyio-4.10.0, langsmith-0.4.27, Faker-25.2.0, typeguard-4.3.0
+collecting ... collected 31 items
+
+tests/test_agentic_loop.py::TestAgentModel::test_determine_tier_1_medical PASSED [  3%]
+tests/test_agentic_loop.py::TestAgentModel::test_determine_tier_2_automotive PASSED [  6%]
+tests/test_agentic_loop.py::TestAgentModel::test_determine_tier_3_property PASSED [  9%]
+tests/test_agentic_loop.py::TestAgentModel::test_should_escalate_critical_priority PASSED [ 12%]
+tests/test_agentic_loop.py::TestAgentModel::test_should_escalate_high_value PASSED [ 16%]
+tests/test_agentic_loop.py::TestAgentModel::test_should_not_escalate_low_value PASSED [ 19%]
+tests/test_agentic_loop.py::TestAgentModel::test_route_claim_tier_1_approved PASSED [ 22%]
+tests/test_agentic_loop.py::TestAgentModel::test_route_claim_tier_2_review PASSED [ 25%]
+tests/test_agentic_loop.py::TestAgentModel::test_route_claim_escalated PASSED [ 29%]
+tests/test_agentic_loop.py::TestAgentModel::test_simulate_stop_reason_tool_use PASSED [ 32%]
+tests/test_agentic_loop.py::TestAgentModel::test_simulate_stop_reason_end_turn PASSED [ 35%]
+tests/test_agentic_loop.py::TestLoopTrace::test_loop_trace_add_turn PASSED [ 38%]
+tests/test_agentic_loop.py::TestLoopTrace::test_loop_trace_should_continue_tool_use PASSED [ 41%]
+tests/test_agentic_loop.py::TestLoopTrace::test_loop_trace_should_terminate_end_turn PASSED [ 45%]
+tests/test_agentic_loop.py::TestLoopTrace::test_loop_trace_should_terminate_max_tokens PASSED [ 48%]
+tests/test_agentic_loop.py::TestLoopTrace::test_loop_trace_empty_should_continue PASSED [ 51%]
+tests/test_agentic_loop.py::TestLoopTrace::test_loop_trace_multiple_turns PASSED [ 54%]
+tests/test_agentic_loop.py::TestAgenticLoopHarness::test_start_claim_processing PASSED [ 58%]
+tests/test_agentic_loop.py::TestAgenticLoopHarness::test_execute_turn PASSED [ 61%]
+tests/test_agentic_loop.py::TestAgenticLoopHarness::test_check_termination_continue PASSED [ 64%]
+tests/test_agentic_loop.py::TestAgenticLoopHarness::test_check_termination_stop PASSED [ 67%]
+tests/test_agentic_loop.py::TestAgenticLoopHarness::test_save_and_load_trace PASSED [ 70%]
+tests/test_agentic_loop.py::TestAgenticLoopHarness::test_finalize_trace PASSED [ 74%]
+tests/test_agentic_loop.py::TestAgenticLoopHarness::test_get_traces_for_claim_type PASSED [ 77%]
+tests/test_agentic_loop.py::TestClaimProcessor::test_process_claim_tier_1 PASSED [ 80%]
+tests/test_agentic_loop.py::TestClaimProcessor::test_process_claim_tier_2 PASSED [ 83%]
+tests/test_agentic_loop.py::TestClaimProcessor::test_process_claim_escalated PASSED [ 87%]
+tests/test_agentic_loop.py::TestClaimProcessor::test_process_claim_creates_trace PASSED [ 90%]
+tests/test_agentic_loop.py::TestClaimProcessor::test_process_batch_multiple_claims PASSED [ 93%]
+tests/test_agentic_loop.py::TestClaimProcessor::test_get_statistics PASSED [ 96%]
+tests/test_agentic_loop.py::TestClaimProcessor::test_max_turns_enforced PASSED [100%]
+
+============================== 31 passed in 0.40s ==============================

@@ -1,0 +1,59 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.14, pytest-8.0.0, pluggy-1.6.0 -- /usr/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /voc/work/cd14715-claude-code-classroom/python-harness
+configfile: pytest.ini
+plugins: cov-4.1.0, anyio-4.10.0, langsmith-0.4.27, Faker-25.2.0, typeguard-4.3.0
+collecting ... collected 29 items
+
+tests/test_context_strategy.py::TestContextModel::test_determine_strategy_preserve_critical_paths PASSED [  3%]
+tests/test_context_strategy.py::TestContextModel::test_determine_strategy_preserve_error_patterns PASSED [  6%]
+tests/test_context_strategy.py::TestContextModel::test_determine_strategy_summarize_module_docs PASSED [ 10%]
+tests/test_context_strategy.py::TestContextModel::test_determine_strategy_summarize_change_history PASSED [ 13%]
+tests/test_context_strategy.py::TestContextModel::test_apply_summarization_full_preserve PASSED [ 17%]
+tests/test_context_strategy.py::TestContextModel::test_apply_summarization_light_summary PASSED [ 20%]
+tests/test_context_strategy.py::TestContextModel::test_apply_summarization_aggressive_summary PASSED [ 24%]
+tests/test_context_strategy.py::TestContextModel::test_create_persistent_facts_block PASSED [ 27%]
+tests/test_context_strategy.py::TestContextModel::test_estimate_token_count PASSED [ 31%]
+tests/test_context_strategy.py::TestContextModel::test_create_budget_with_reduction FAILED [ 34%]
+tests/test_context_strategy.py::TestContextBlock::test_context_block_calculate_tokens PASSED [ 37%]
+tests/test_context_strategy.py::TestContextBlock::test_context_block_no_summarization PASSED [ 41%]
+tests/test_context_strategy.py::TestContextBlock::test_token_budget_calculate_reduction PASSED [ 44%]
+tests/test_context_strategy.py::TestContextBlock::test_evaluation_question_requires_preserved PASSED [ 48%]
+tests/test_context_strategy.py::TestContextBlock::test_evaluation_result PASSED [ 51%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_add_context_block_preserved PASSED [ 55%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_add_context_block_summarized PASSED [ 58%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_assemble_optimized_context_with_facts PASSED [ 62%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_assemble_optimized_context_without_facts PASSED [ 65%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_calculate_budget_shows_reduction FAILED [ 68%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_save_and_load_budget PASSED [ 72%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_evaluate_question_with_context PASSED [ 75%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_run_evaluation_full_variant PASSED [ 79%]
+tests/test_context_strategy.py::TestContextOptimizer::test_create_evaluation_questions PASSED [ 82%]
+tests/test_context_strategy.py::TestContextOptimizer::test_add_raw_context FAILED [ 86%]
+tests/test_context_strategy.py::TestContextOptimizer::test_optimize_and_evaluate_answers_questions PASSED [ 89%]
+tests/test_context_strategy.py::TestContextOptimizer::test_control_variant_shows_regression PASSED [ 93%]
+tests/test_context_strategy.py::TestContextOptimizer::test_get_optimization_summary PASSED [ 96%]
+tests/test_context_strategy.py::TestContextOptimizer::test_verify_requirements_met PASSED [100%]
+
+=================================== FAILURES ===================================
+______________ TestContextModel.test_create_budget_with_reduction ______________
+tests/test_context_strategy.py:93: in test_create_budget_with_reduction
+    assert budget.reduction_percentage == 55.0
+E   AssertionError: assert 55.00000000000001 == 55.0
+E    +  where 55.00000000000001 = TokenBudget(baseline_tokens=10000, optimized_tokens=4500, reduction_percentage=55.00000000000001, components={'summarized': ['docs'], 'preserved': ['errors']}).reduction_percentage
+_______ TestContextStrategyHarness.test_calculate_budget_shows_reduction _______
+tests/test_context_strategy.py:232: in test_calculate_budget_shows_reduction
+    assert budget.baseline_tokens > budget.optimized_tokens
+E   AssertionError: assert 1250 > 1298
+E    +  where 1250 = TokenBudget(baseline_tokens=1250, optimized_tokens=1298, reduction_percentage=-3.84, components={'summarized': ['module_docs'], 'preserved': ['critical_paths']}).baseline_tokens
+E    +  and   1298 = TokenBudget(baseline_tokens=1250, optimized_tokens=1298, reduction_percentage=-3.84, components={'summarized': ['module_docs'], 'preserved': ['critical_paths']}).optimized_tokens
+__________________ TestContextOptimizer.test_add_raw_context ___________________
+tests/test_context_strategy.py:323: in test_add_raw_context
+    assert results["budget"]["reduction_percentage"] > 0
+E   assert -2.1333333333333333 > 0
+=========================== short test summary info ============================
+FAILED tests/test_context_strategy.py::TestContextModel::test_create_budget_with_reduction
+FAILED tests/test_context_strategy.py::TestContextStrategyHarness::test_calculate_budget_shows_reduction
+FAILED tests/test_context_strategy.py::TestContextOptimizer::test_add_raw_context
+========================= 3 failed, 26 passed in 0.42s =========================

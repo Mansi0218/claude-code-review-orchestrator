@@ -1,0 +1,15 @@
+{
+  "baseline_tokens": 7475,
+  "optimized_tokens": 2003,
+  "reduction_percentage": 73.20401337792643,
+  "components": {
+    "summarized": [
+      "module_docs",
+      "change_history"
+    ],
+    "preserved": [
+      "critical_paths",
+      "error_patterns"
+    ]
+  }
+}

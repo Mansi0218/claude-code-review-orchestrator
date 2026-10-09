@@ -1,0 +1,75 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.14, pytest-8.0.0, pluggy-1.6.0 -- /usr/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /voc/work/cd14715-claude-code-classroom/python-harness
+configfile: pytest.ini
+plugins: cov-4.1.0, anyio-4.10.0, langsmith-0.4.27, Faker-25.2.0, typeguard-4.3.0
+collecting ... collected 35 items
+
+tests/test_configuration.py::TestConfigModel::test_parse_yaml_frontmatter_valid PASSED [  2%]
+tests/test_configuration.py::TestConfigModel::test_parse_yaml_frontmatter_no_frontmatter PASSED [  5%]
+tests/test_configuration.py::TestConfigModel::test_parse_yaml_frontmatter_invalid_yaml PASSED [  8%]
+tests/test_configuration.py::TestConfigModel::test_parse_yaml_frontmatter_missing_closing FAILED [ 11%]
+tests/test_configuration.py::TestConfigModel::test_validate_glob_pattern_valid PASSED [ 14%]
+tests/test_configuration.py::TestConfigModel::test_validate_glob_pattern_empty PASSED [ 17%]
+tests/test_configuration.py::TestConfigModel::test_validate_glob_pattern_invalid_priority PASSED [ 20%]
+tests/test_configuration.py::TestConfigModel::test_validate_rule_frontmatter PASSED [ 22%]
+tests/test_configuration.py::TestConfigModel::test_validate_skill_config_fork_context PASSED [ 25%]
+tests/test_configuration.py::TestConfigModel::test_validate_skill_config_invalid_tool PASSED [ 28%]
+tests/test_configuration.py::TestConfigModel::test_parse_claude_md_with_imports PASSED [ 31%]
+tests/test_configuration.py::TestConfigModel::test_claude_config_invalid_import PASSED [ 34%]
+tests/test_configuration.py::TestPathGlobValidator::test_is_valid_glob_simple PASSED [ 37%]
+tests/test_configuration.py::TestPathGlobValidator::test_is_valid_glob_recursive PASSED [ 40%]
+tests/test_configuration.py::TestPathGlobValidator::test_is_valid_glob_multiple_extensions PASSED [ 42%]
+tests/test_configuration.py::TestPathGlobValidator::test_is_valid_glob_empty PASSED [ 45%]
+tests/test_configuration.py::TestPathGlobValidator::test_resolve_glob_matches_files PASSED [ 48%]
+tests/test_configuration.py::TestPathGlobValidator::test_resolve_glob_no_matches PASSED [ 51%]
+tests/test_configuration.py::TestPathGlobValidator::test_validate_import_path_exists PASSED [ 54%]
+tests/test_configuration.py::TestPathGlobValidator::test_validate_import_path_not_exists PASSED [ 57%]
+tests/test_configuration.py::TestConfigurationHarness::test_load_claude_md PASSED [ 60%]
+tests/test_configuration.py::TestConfigurationHarness::test_validate_imports_all_valid FAILED [ 62%]
+tests/test_configuration.py::TestConfigurationHarness::test_validate_imports_with_invalid PASSED [ 65%]
+tests/test_configuration.py::TestConfigurationHarness::test_find_rule_files PASSED [ 68%]
+tests/test_configuration.py::TestConfigurationHarness::test_find_skill_files PASSED [ 71%]
+tests/test_configuration.py::TestConfigurationHarness::test_load_rule_file PASSED [ 74%]
+tests/test_configuration.py::TestConfigurationHarness::test_check_read_only_tools PASSED [ 77%]
+tests/test_configuration.py::TestConfigValidator::test_validate_all_success FAILED [ 80%]
+tests/test_configuration.py::TestConfigValidator::test_validate_missing_claude_dir PASSED [ 82%]
+tests/test_configuration.py::TestConfigValidator::test_validate_invalid_import PASSED [ 85%]
+tests/test_configuration.py::TestConfigValidator::test_validate_invalid_glob_pattern PASSED [ 88%]
+tests/test_configuration.py::TestConfigValidator::test_validation_result_add_error PASSED [ 91%]
+tests/test_configuration.py::TestConfigValidator::test_validation_result_add_warning PASSED [ 94%]
+tests/test_configuration.py::TestConfigValidator::test_validation_result_str PASSED [ 97%]
+tests/test_configuration.py::TestConfigValidator::test_config_validator_run FAILED [100%]
+
+=================================== FAILURES ===================================
+_________ TestConfigModel.test_parse_yaml_frontmatter_missing_closing __________
+tests/test_configuration.py:71: in test_parse_yaml_frontmatter_missing_closing
+    with pytest.raises(ValueError, match="missing closing"):
+E   Failed: DID NOT RAISE <class 'ValueError'>
+___________ TestConfigurationHarness.test_validate_imports_all_valid ___________
+tests/test_configuration.py:274: in test_validate_imports_all_valid
+    assert len(invalid) == 0
+E   AssertionError: assert 2 == 0
+E    +  where 2 = len(['@.claude/standards/api.md', '@.claude/standards/testing.md'])
+________________ TestConfigValidator.test_validate_all_success _________________
+tests/test_configuration.py:373: in test_validate_all_success
+    assert result.passed
+E   assert False
+E    +  where False = <src.configuration.orchestrator.ValidationResult object at 0x7f03346fbd90>.passed
+________________ TestConfigValidator.test_config_validator_run _________________
+tests/test_configuration.py:451: in test_config_validator_run
+    assert exit_code == 0
+E   assert 1 == 0
+----------------------------- Captured stdout call -----------------------------
+Errors (1):
+  - Import path not found: @.claude/standards/api.md
+
+Status: FAILED
+Exit Code: 1
+=========================== short test summary info ============================
+FAILED tests/test_configuration.py::TestConfigModel::test_parse_yaml_frontmatter_missing_closing
+FAILED tests/test_configuration.py::TestConfigurationHarness::test_validate_imports_all_valid
+FAILED tests/test_configuration.py::TestConfigValidator::test_validate_all_success
+FAILED tests/test_configuration.py::TestConfigValidator::test_config_validator_run
+========================= 4 failed, 31 passed in 1.14s =========================

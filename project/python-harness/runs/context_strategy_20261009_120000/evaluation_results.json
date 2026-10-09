@@ -1,0 +1,103 @@
+{
+  "budget": {
+    "baseline_tokens": 7475,
+    "optimized_tokens": 2003,
+    "reduction_percentage": 73.20401337792643,
+    "components": {
+      "summarized": [
+        "module_docs",
+        "change_history"
+      ],
+      "preserved": [
+        "critical_paths",
+        "error_patterns"
+      ]
+    }
+  },
+  "full_evaluation": {
+    "questions_answered": 6,
+    "total_questions": 6,
+    "results": [
+      {
+        "question_id": "Q1",
+        "answered_correctly": true,
+        "confidence": 0.9,
+        "variant": "full"
+      },
+      {
+        "question_id": "Q2",
+        "answered_correctly": true,
+        "confidence": 0.9,
+        "variant": "full"
+      },
+      {
+        "question_id": "Q3",
+        "answered_correctly": true,
+        "confidence": 0.9,
+        "variant": "full"
+      },
+      {
+        "question_id": "Q4",
+        "answered_correctly": true,
+        "confidence": 0.9,
+        "variant": "full"
+      },
+      {
+        "question_id": "Q5",
+        "answered_correctly": true,
+        "confidence": 0.9,
+        "variant": "full"
+      },
+      {
+        "question_id": "Q6",
+        "answered_correctly": true,
+        "confidence": 0.9,
+        "variant": "full"
+      }
+    ]
+  },
+  "control_evaluation": {
+    "questions_answered": 4,
+    "total_questions": 6,
+    "results": [
+      {
+        "question_id": "Q1",
+        "answered_correctly": false,
+        "confidence": 0.3,
+        "variant": "control"
+      },
+      {
+        "question_id": "Q2",
+        "answered_correctly": false,
+        "confidence": 0.3,
+        "variant": "control"
+      },
+      {
+        "question_id": "Q3",
+        "answered_correctly": true,
+        "confidence": 0.9,
+        "variant": "control"
+      },
+      {
+        "question_id": "Q4",
+        "answered_correctly": true,
+        "confidence": 0.9,
+        "variant": "control"
+      },
+      {
+        "question_id": "Q5",
+        "answered_correctly": true,
+        "confidence": 0.9,
+        "variant": "control"
+      },
+      {
+        "question_id": "Q6",
+        "answered_correctly": true,
+        "confidence": 0.9,
+        "variant": "control"
+      }
+    ]
+  },
+  "regression_detected": true,
+  "regression_count": 2
+}

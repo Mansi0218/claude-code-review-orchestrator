@@ -1,0 +1,53 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.14, pytest-8.0.0, pluggy-1.6.0 -- /usr/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /voc/work/cd14715-claude-code-classroom/python-harness
+configfile: pytest.ini
+plugins: cov-4.1.0, anyio-4.10.0, langsmith-0.4.27, Faker-25.2.0, typeguard-4.3.0
+collecting ... collected 33 items
+
+tests/test_orchestration.py::TestStateModel::test_is_state_stale_fresh PASSED [  3%]
+tests/test_orchestration.py::TestStateModel::test_is_state_stale_old PASSED [  6%]
+tests/test_orchestration.py::TestStateModel::test_is_state_stale_threshold PASSED [  9%]
+tests/test_orchestration.py::TestStateModel::test_should_resume_no_state PASSED [ 12%]
+tests/test_orchestration.py::TestStateModel::test_should_resume_fresh_state PASSED [ 15%]
+tests/test_orchestration.py::TestStateModel::test_should_resume_stale_state PASSED [ 18%]
+tests/test_orchestration.py::TestStateModel::test_create_sql_filter_severity PASSED [ 21%]
+tests/test_orchestration.py::TestStateModel::test_create_sql_filter_status PASSED [ 24%]
+tests/test_orchestration.py::TestStateModel::test_create_sql_filter_both PASSED [ 27%]
+tests/test_orchestration.py::TestStateModel::test_ensure_fork_isolation PASSED [ 30%]
+tests/test_orchestration.py::TestHotState::test_hot_state_size_calculation PASSED [ 33%]
+tests/test_orchestration.py::TestHotState::test_hot_state_under_budget PASSED [ 36%]
+tests/test_orchestration.py::TestHotState::test_hot_state_exceeds_budget FAILED [ 39%]
+tests/test_orchestration.py::TestHotState::test_defect_creation PASSED   [ 42%]
+tests/test_orchestration.py::TestHotState::test_session_fork_creation PASSED [ 45%]
+tests/test_orchestration.py::TestHotState::test_hot_state_recent_defects_limit PASSED [ 48%]
+tests/test_orchestration.py::TestHotState::test_defect_status_enum PASSED [ 51%]
+tests/test_orchestration.py::TestHotState::test_defect_severity_enum PASSED [ 54%]
+tests/test_orchestration.py::TestOrchestrationHarness::test_save_and_load_hot_state PASSED [ 57%]
+tests/test_orchestration.py::TestOrchestrationHarness::test_load_hot_state_missing_file PASSED [ 60%]
+tests/test_orchestration.py::TestOrchestrationHarness::test_update_hot_state_adds_recent PASSED [ 63%]
+tests/test_orchestration.py::TestOrchestrationHarness::test_store_and_query_defect_sql PASSED [ 66%]
+tests/test_orchestration.py::TestOrchestrationHarness::test_query_defects_with_filter PASSED [ 69%]
+tests/test_orchestration.py::TestOrchestrationHarness::test_attempt_recovery_no_state PASSED [ 72%]
+tests/test_orchestration.py::TestOrchestrationHarness::test_attempt_recovery_fresh_state PASSED [ 75%]
+tests/test_orchestration.py::TestOrchestrationHarness::test_rebuild_from_sql PASSED [ 78%]
+tests/test_orchestration.py::TestOrchestrationHarness::test_create_fork PASSED [ 81%]
+tests/test_orchestration.py::TestDefectOrchestrator::test_start_session_fresh PASSED [ 84%]
+tests/test_orchestration.py::TestDefectOrchestrator::test_process_defect PASSED [ 87%]
+tests/test_orchestration.py::TestDefectOrchestrator::test_process_shift_with_filtering PASSED [ 90%]
+tests/test_orchestration.py::TestDefectOrchestrator::test_verify_hot_state_budget PASSED [ 93%]
+tests/test_orchestration.py::TestDefectOrchestrator::test_create_investigation_fork PASSED [ 96%]
+tests/test_orchestration.py::TestDefectOrchestrator::test_get_statistics PASSED [100%]
+
+=================================== FAILURES ===================================
+__________________ TestHotState.test_hot_state_exceeds_budget __________________
+tests/test_orchestration.py:127: in test_hot_state_exceeds_budget
+    state = HotState(
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for HotState
+E   recent_defects
+E     List should have at most 10 items after validation, not 50 [type=too_long, input_value=['Dxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxx049'], input_type=list]
+E       For further information visit https://errors.pydantic.dev/2.6/v/too_long
+=========================== short test summary info ============================
+FAILED tests/test_orchestration.py::TestHotState::test_hot_state_exceeds_budget
+========================= 1 failed, 32 passed in 0.69s =========================

@@ -1,0 +1,35 @@
+{
+  "run_id": "orchestration_20261009_120000",
+  "timestamp": "2026-10-09T08:04:53.809802",
+  "defects_processed": 3,
+  "shift_processing": {
+    "defects_found": 1,
+    "defects_processed": 1,
+    "filter": "severity=high, status=all",
+    "used_sql_filtering": true
+  },
+  "hot_state_budget": {
+    "exists": true,
+    "size_bytes": 170,
+    "budget_kb": 5,
+    "under_budget": true
+  },
+  "fork_created": {
+    "fork_id": "investigation_001",
+    "parent_session": "main_session",
+    "fork_session": "main_session_fork_investigation_001",
+    "is_isolated": true,
+    "created_at": "2026-10-09T08:04:53.735268"
+  },
+  "statistics": {
+    "total_defects_in_sql": 3,
+    "hot_state_recent_count": 3,
+    "hot_state_active_count": 1,
+    "hot_state_version": 5,
+    "hot_state_size_bytes": 170,
+    "by_status": {
+      "pending": 2,
+      "in_progress": 1
+    }
+  }
+}
