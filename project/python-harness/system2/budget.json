@@ -1,0 +1,44 @@
+{
+  "baseline_tokens": 3250,
+  "optimized_tokens": 1425,
+  "reduction_percentage": 56.15,
+  "components": {
+    "summarized": [
+      "module_docs",
+      "change_history"
+    ],
+    "preserved": [
+      "critical_paths",
+      "error_patterns"
+    ]
+  },
+  "strategy_details": {
+    "module_docs": {
+      "original_tokens": 1500,
+      "summarized_tokens": 375,
+      "strategy": "aggressive_summary",
+      "reduction": 75.0
+    },
+    "change_history": {
+      "original_tokens": 900,
+      "summarized_tokens": 225,
+      "strategy": "aggressive_summary",
+      "reduction": 75.0
+    },
+    "critical_paths": {
+      "original_tokens": 425,
+      "summarized_tokens": 425,
+      "strategy": "full_preserve",
+      "reduction": 0.0
+    },
+    "error_patterns": {
+      "original_tokens": 425,
+      "summarized_tokens": 425,
+      "strategy": "full_preserve",
+      "reduction": 0.0
+    }
+  },
+  "persistent_facts_overhead": 50,
+  "total_optimized_with_facts": 1475,
+  "notes": "Critical paths and error patterns preserved verbatim for accuracy. Documentation and history aggressively summarized."
+}

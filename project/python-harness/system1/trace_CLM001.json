@@ -1,0 +1,61 @@
+{
+  "claim_id": "CLM001",
+  "turns": [
+    {
+      "turn_number": 1,
+      "role": "user",
+      "content": "Process claim CLM001: Medical claim for routine checkup and diagnostic tests. Analyze the claim amount ($7500.0) and type (medical) to determine the appropriate processing tier.",
+      "stop_reason": null,
+      "tool_calls": []
+    },
+    {
+      "turn_number": 2,
+      "role": "assistant",
+      "content": "I'll help process this medical claim. Let me gather the necessary information to determine the appropriate tier and routing decision.",
+      "stop_reason": "tool_use",
+      "tool_calls": [
+        "get_claim_history",
+        "check_policy"
+      ]
+    },
+    {
+      "turn_number": 3,
+      "role": "user",
+      "content": "[Tool results provided]",
+      "stop_reason": null,
+      "tool_calls": []
+    },
+    {
+      "turn_number": 4,
+      "role": "assistant",
+      "content": "Based on the claim history and policy coverage, I need to verify a few more details about the medical procedures.",
+      "stop_reason": "tool_use",
+      "tool_calls": [
+        "get_claim_history"
+      ]
+    },
+    {
+      "turn_number": 5,
+      "role": "user",
+      "content": "[Tool results provided]",
+      "stop_reason": null,
+      "tool_calls": []
+    },
+    {
+      "turn_number": 6,
+      "role": "assistant",
+      "content": "Thank you. Based on my analysis:\n\n- Claim amount: $7,500.00\n- Claim type: Medical (routine checkup and diagnostic tests)\n- Tier determination: This falls into Tier 1 category (under $10,000 threshold for medical claims)\n- Recommendation: Approve for automatic processing\n\nThe claim meets all requirements for Tier 1 approval and can proceed with standard processing.",
+      "stop_reason": "end_turn",
+      "tool_calls": []
+    }
+  ],
+  "final_decision": {
+    "claim_id": "CLM001",
+    "decision": "approved",
+    "tier": 1,
+    "reason": "Auto-approved: Low value, standard processing",
+    "timestamp": "2026-10-12T08:30:15.123456"
+  },
+  "total_turns": 6,
+  "terminated_reason": "end_turn"
+}

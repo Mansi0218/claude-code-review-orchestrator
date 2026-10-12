@@ -1,0 +1,120 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.14, pytest-8.0.0, pluggy-1.6.0 -- /usr/bin/python
+cachedir: .pytest_cache
+rootdir: /voc/work/cd14715-claude-code-classroom/project/python-harness
+configfile: pytest.ini
+plugins: cov-4.1.0, anyio-4.10.0, langsmith-0.4.27, Faker-25.2.0, typeguard-4.3.0
+collecting ... collected 31 items
+
+tests/test_agentic_loop.py::TestAgentModel::test_determine_tier_1_medical <- ../../python-harness/tests/test_agentic_loop.py PASSED [  3%]
+tests/test_agentic_loop.py::TestAgentModel::test_determine_tier_2_automotive <- ../../python-harness/tests/test_agentic_loop.py PASSED [  6%]
+tests/test_agentic_loop.py::TestAgentModel::test_determine_tier_3_property <- ../../python-harness/tests/test_agentic_loop.py PASSED [  9%]
+tests/test_agentic_loop.py::TestAgentModel::test_should_escalate_critical_priority <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 12%]
+tests/test_agentic_loop.py::TestAgentModel::test_should_escalate_high_value <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 16%]
+tests/test_agentic_loop.py::TestAgentModel::test_should_not_escalate_low_value <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 19%]
+tests/test_agentic_loop.py::TestAgentModel::test_route_claim_tier_1_approved <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 22%]
+tests/test_agentic_loop.py::TestAgentModel::test_route_claim_tier_2_review <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 25%]
+tests/test_agentic_loop.py::TestAgentModel::test_route_claim_escalated <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 29%]
+tests/test_agentic_loop.py::TestAgentModel::test_simulate_stop_reason_tool_use <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 32%]
+tests/test_agentic_loop.py::TestAgentModel::test_simulate_stop_reason_end_turn <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 35%]
+tests/test_agentic_loop.py::TestLoopTrace::test_loop_trace_add_turn <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 38%]
+tests/test_agentic_loop.py::TestLoopTrace::test_loop_trace_should_continue_tool_use <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 41%]
+tests/test_agentic_loop.py::TestLoopTrace::test_loop_trace_should_terminate_end_turn <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 45%]
+tests/test_agentic_loop.py::TestLoopTrace::test_loop_trace_should_terminate_max_tokens <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 48%]
+tests/test_agentic_loop.py::TestLoopTrace::test_loop_trace_empty_should_continue <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 51%]
+tests/test_agentic_loop.py::TestLoopTrace::test_loop_trace_multiple_turns <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 54%]
+tests/test_agentic_loop.py::TestAgenticLoopHarness::test_start_claim_processing <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 58%]
+tests/test_agentic_loop.py::TestAgenticLoopHarness::test_execute_turn <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 61%]
+tests/test_agentic_loop.py::TestAgenticLoopHarness::test_check_termination_continue <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 64%]
+tests/test_agentic_loop.py::TestAgenticLoopHarness::test_check_termination_stop <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 67%]
+tests/test_agentic_loop.py::TestAgenticLoopHarness::test_save_and_load_trace <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 70%]
+tests/test_agentic_loop.py::TestAgenticLoopHarness::test_finalize_trace <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 74%]
+tests/test_agentic_loop.py::TestAgenticLoopHarness::test_get_traces_for_claim_type <- ../../python-harness/tests/test_agentic_loop.py PASSED [ 77%]
+tests/test_agentic_loop.py::TestClaimProcessor::test_process_claim_tier_1 <- ../../python-harness/tests/test_agentic_loop.py FAILED [ 80%]
+tests/test_agentic_loop.py::TestClaimProcessor::test_process_claim_tier_2 <- ../../python-harness/tests/test_agentic_loop.py FAILED [ 83%]
+tests/test_agentic_loop.py::TestClaimProcessor::test_process_claim_escalated <- ../../python-harness/tests/test_agentic_loop.py FAILED [ 87%]
+tests/test_agentic_loop.py::TestClaimProcessor::test_process_claim_creates_trace <- ../../python-harness/tests/test_agentic_loop.py FAILED [ 90%]
+tests/test_agentic_loop.py::TestClaimProcessor::test_process_batch_multiple_claims <- ../../python-harness/tests/test_agentic_loop.py FAILED [ 93%]
+tests/test_agentic_loop.py::TestClaimProcessor::test_get_statistics <- ../../python-harness/tests/test_agentic_loop.py FAILED [ 96%]
+tests/test_agentic_loop.py::TestClaimProcessor::test_max_turns_enforced <- ../../python-harness/tests/test_agentic_loop.py FAILED [100%]
+
+=================================== FAILURES ===================================
+_________________ TestClaimProcessor.test_process_claim_tier_1 _________________
+/voc/work/cd14715-claude-code-classroom/python-harness/tests/test_agentic_loop.py:428: in test_process_claim_tier_1
+    ???
+src/agentic_loop/orchestrator.py:37: in __init__
+    self.client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+../../../.local/lib/python3.10/site-packages/anthropic/_client.py:119: in __init__
+    super().__init__(
+../../../.local/lib/python3.10/site-packages/anthropic/_base_client.py:801: in __init__
+    self._client = http_client or SyncHttpxClientWrapper(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'proxies'
+_________________ TestClaimProcessor.test_process_claim_tier_2 _________________
+/voc/work/cd14715-claude-code-classroom/python-harness/tests/test_agentic_loop.py:446: in test_process_claim_tier_2
+    ???
+src/agentic_loop/orchestrator.py:37: in __init__
+    self.client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+../../../.local/lib/python3.10/site-packages/anthropic/_client.py:119: in __init__
+    super().__init__(
+../../../.local/lib/python3.10/site-packages/anthropic/_base_client.py:801: in __init__
+    self._client = http_client or SyncHttpxClientWrapper(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'proxies'
+_______________ TestClaimProcessor.test_process_claim_escalated ________________
+/voc/work/cd14715-claude-code-classroom/python-harness/tests/test_agentic_loop.py:463: in test_process_claim_escalated
+    ???
+src/agentic_loop/orchestrator.py:37: in __init__
+    self.client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+../../../.local/lib/python3.10/site-packages/anthropic/_client.py:119: in __init__
+    super().__init__(
+../../../.local/lib/python3.10/site-packages/anthropic/_base_client.py:801: in __init__
+    self._client = http_client or SyncHttpxClientWrapper(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'proxies'
+_____________ TestClaimProcessor.test_process_claim_creates_trace ______________
+/voc/work/cd14715-claude-code-classroom/python-harness/tests/test_agentic_loop.py:480: in test_process_claim_creates_trace
+    ???
+src/agentic_loop/orchestrator.py:37: in __init__
+    self.client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+../../../.local/lib/python3.10/site-packages/anthropic/_client.py:119: in __init__
+    super().__init__(
+../../../.local/lib/python3.10/site-packages/anthropic/_base_client.py:801: in __init__
+    self._client = http_client or SyncHttpxClientWrapper(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'proxies'
+____________ TestClaimProcessor.test_process_batch_multiple_claims _____________
+/voc/work/cd14715-claude-code-classroom/python-harness/tests/test_agentic_loop.py:497: in test_process_batch_multiple_claims
+    ???
+src/agentic_loop/orchestrator.py:37: in __init__
+    self.client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+../../../.local/lib/python3.10/site-packages/anthropic/_client.py:119: in __init__
+    super().__init__(
+../../../.local/lib/python3.10/site-packages/anthropic/_base_client.py:801: in __init__
+    self._client = http_client or SyncHttpxClientWrapper(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'proxies'
+____________________ TestClaimProcessor.test_get_statistics ____________________
+/voc/work/cd14715-claude-code-classroom/python-harness/tests/test_agentic_loop.py:517: in test_get_statistics
+    ???
+src/agentic_loop/orchestrator.py:37: in __init__
+    self.client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+../../../.local/lib/python3.10/site-packages/anthropic/_client.py:119: in __init__
+    super().__init__(
+../../../.local/lib/python3.10/site-packages/anthropic/_base_client.py:801: in __init__
+    self._client = http_client or SyncHttpxClientWrapper(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'proxies'
+__________________ TestClaimProcessor.test_max_turns_enforced __________________
+/voc/work/cd14715-claude-code-classroom/python-harness/tests/test_agentic_loop.py:537: in test_max_turns_enforced
+    ???
+src/agentic_loop/orchestrator.py:37: in __init__
+    self.client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+../../../.local/lib/python3.10/site-packages/anthropic/_client.py:119: in __init__
+    super().__init__(
+../../../.local/lib/python3.10/site-packages/anthropic/_base_client.py:801: in __init__
+    self._client = http_client or SyncHttpxClientWrapper(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'proxies'
+=========================== short test summary info ============================
+FAILED tests/test_agentic_loop.py::TestClaimProcessor::test_process_claim_tier_1
+FAILED tests/test_agentic_loop.py::TestClaimProcessor::test_process_claim_tier_2
+FAILED tests/test_agentic_loop.py::TestClaimProcessor::test_process_claim_escalated
+FAILED tests/test_agentic_loop.py::TestClaimProcessor::test_process_claim_creates_trace
+FAILED tests/test_agentic_loop.py::TestClaimProcessor::test_process_batch_multiple_claims
+FAILED tests/test_agentic_loop.py::TestClaimProcessor::test_get_statistics - ...
+FAILED tests/test_agentic_loop.py::TestClaimProcessor::test_max_turns_enforced
+========================= 7 failed, 24 passed in 1.04s =========================

@@ -1,0 +1,51 @@
+{
+  "shift_id": "shift_2026-10-12_morning",
+  "timestamp": "2026-10-12T08:45:30.123456",
+  "filter": {
+    "severity": "HIGH",
+    "status": "PENDING"
+  },
+  "sql_query": "SELECT * FROM defects WHERE severity = 'HIGH' AND status = 'PENDING'",
+  "defects_found": 3,
+  "defects_processed": 3,
+  "used_sql_filtering": true,
+  "defects": [
+    {
+      "defect_id": "DEF001",
+      "severity": "HIGH",
+      "status": "IN_PROGRESS",
+      "description": "Critical authentication bug",
+      "assigned_to": "security_team",
+      "updated": "2026-10-12T08:45:30"
+    },
+    {
+      "defect_id": "DEF005",
+      "severity": "HIGH",
+      "status": "IN_PROGRESS",
+      "description": "Database connection pool exhaustion",
+      "assigned_to": "backend_team",
+      "updated": "2026-10-12T08:45:31"
+    },
+    {
+      "defect_id": "DEF007",
+      "severity": "HIGH",
+      "status": "IN_PROGRESS",
+      "description": "Memory leak in claim processor",
+      "assigned_to": "performance_team",
+      "updated": "2026-10-12T08:45:32"
+    }
+  ],
+  "summary": {
+    "total_in_db": 47,
+    "filtered_by_sql": 3,
+    "processing_time_ms": 145,
+    "sql_filtering_benefit": "Loaded only 6% of defects from database"
+  },
+  "state_management": {
+    "hot_state_file": "hot_state_main_session.json",
+    "hot_state_size_bytes": 198,
+    "hot_state_budget_bytes": 5120,
+    "under_budget": true,
+    "budget_usage_percent": 3.9
+  }
+}

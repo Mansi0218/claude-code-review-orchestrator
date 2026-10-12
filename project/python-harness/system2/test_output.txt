@@ -1,0 +1,79 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.14, pytest-8.0.0, pluggy-1.6.0 -- /usr/bin/python
+cachedir: .pytest_cache
+rootdir: /voc/work/cd14715-claude-code-classroom/project/python-harness
+configfile: pytest.ini
+plugins: cov-4.1.0, anyio-4.10.0, langsmith-0.4.27, Faker-25.2.0, typeguard-4.3.0
+collecting ... collected 29 items
+
+tests/test_context_strategy.py::TestContextModel::test_determine_strategy_preserve_critical_paths <- ../../python-harness/tests/test_context_strategy.py PASSED [  3%]
+tests/test_context_strategy.py::TestContextModel::test_determine_strategy_preserve_error_patterns <- ../../python-harness/tests/test_context_strategy.py PASSED [  6%]
+tests/test_context_strategy.py::TestContextModel::test_determine_strategy_summarize_module_docs <- ../../python-harness/tests/test_context_strategy.py PASSED [ 10%]
+tests/test_context_strategy.py::TestContextModel::test_determine_strategy_summarize_change_history <- ../../python-harness/tests/test_context_strategy.py PASSED [ 13%]
+tests/test_context_strategy.py::TestContextModel::test_apply_summarization_full_preserve <- ../../python-harness/tests/test_context_strategy.py FAILED [ 17%]
+tests/test_context_strategy.py::TestContextModel::test_apply_summarization_light_summary <- ../../python-harness/tests/test_context_strategy.py FAILED [ 20%]
+tests/test_context_strategy.py::TestContextModel::test_apply_summarization_aggressive_summary <- ../../python-harness/tests/test_context_strategy.py FAILED [ 24%]
+tests/test_context_strategy.py::TestContextModel::test_create_persistent_facts_block <- ../../python-harness/tests/test_context_strategy.py PASSED [ 27%]
+tests/test_context_strategy.py::TestContextModel::test_estimate_token_count <- ../../python-harness/tests/test_context_strategy.py FAILED [ 31%]
+tests/test_context_strategy.py::TestContextModel::test_create_budget_with_reduction <- ../../python-harness/tests/test_context_strategy.py FAILED [ 34%]
+tests/test_context_strategy.py::TestContextBlock::test_context_block_calculate_tokens <- ../../python-harness/tests/test_context_strategy.py PASSED [ 37%]
+tests/test_context_strategy.py::TestContextBlock::test_context_block_no_summarization <- ../../python-harness/tests/test_context_strategy.py PASSED [ 41%]
+tests/test_context_strategy.py::TestContextBlock::test_token_budget_calculate_reduction <- ../../python-harness/tests/test_context_strategy.py PASSED [ 44%]
+tests/test_context_strategy.py::TestContextBlock::test_evaluation_question_requires_preserved <- ../../python-harness/tests/test_context_strategy.py PASSED [ 48%]
+tests/test_context_strategy.py::TestContextBlock::test_evaluation_result <- ../../python-harness/tests/test_context_strategy.py PASSED [ 51%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_add_context_block_preserved <- ../../python-harness/tests/test_context_strategy.py PASSED [ 55%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_add_context_block_summarized <- ../../python-harness/tests/test_context_strategy.py PASSED [ 58%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_assemble_optimized_context_with_facts <- ../../python-harness/tests/test_context_strategy.py PASSED [ 62%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_assemble_optimized_context_without_facts <- ../../python-harness/tests/test_context_strategy.py PASSED [ 65%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_calculate_budget_shows_reduction <- ../../python-harness/tests/test_context_strategy.py FAILED [ 68%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_save_and_load_budget <- ../../python-harness/tests/test_context_strategy.py PASSED [ 72%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_evaluate_question_with_context <- ../../python-harness/tests/test_context_strategy.py PASSED [ 75%]
+tests/test_context_strategy.py::TestContextStrategyHarness::test_run_evaluation_full_variant <- ../../python-harness/tests/test_context_strategy.py PASSED [ 79%]
+tests/test_context_strategy.py::TestContextOptimizer::test_create_evaluation_questions <- ../../python-harness/tests/test_context_strategy.py PASSED [ 82%]
+tests/test_context_strategy.py::TestContextOptimizer::test_add_raw_context <- ../../python-harness/tests/test_context_strategy.py FAILED [ 86%]
+tests/test_context_strategy.py::TestContextOptimizer::test_optimize_and_evaluate_answers_questions <- ../../python-harness/tests/test_context_strategy.py PASSED [ 89%]
+tests/test_context_strategy.py::TestContextOptimizer::test_control_variant_shows_regression <- ../../python-harness/tests/test_context_strategy.py PASSED [ 93%]
+tests/test_context_strategy.py::TestContextOptimizer::test_get_optimization_summary <- ../../python-harness/tests/test_context_strategy.py PASSED [ 96%]
+tests/test_context_strategy.py::TestContextOptimizer::test_verify_requirements_met <- ../../python-harness/tests/test_context_strategy.py PASSED [100%]
+
+=================================== FAILURES ===================================
+___________ TestContextModel.test_apply_summarization_full_preserve ____________
+/voc/work/cd14715-claude-code-classroom/python-harness/tests/test_context_strategy.py:51: in test_apply_summarization_full_preserve
+    ???
+E   TypeError: ContextModel.apply_summarization() missing 1 required positional argument: 'strategy'
+___________ TestContextModel.test_apply_summarization_light_summary ____________
+/voc/work/cd14715-claude-code-classroom/python-harness/tests/test_context_strategy.py:57: in test_apply_summarization_light_summary
+    ???
+E   TypeError: ContextModel.apply_summarization() missing 1 required positional argument: 'strategy'
+_________ TestContextModel.test_apply_summarization_aggressive_summary _________
+/voc/work/cd14715-claude-code-classroom/python-harness/tests/test_context_strategy.py:64: in test_apply_summarization_aggressive_summary
+    ???
+E   TypeError: ContextModel.apply_summarization() missing 1 required positional argument: 'strategy'
+__________________ TestContextModel.test_estimate_token_count __________________
+/voc/work/cd14715-claude-code-classroom/python-harness/tests/test_context_strategy.py:80: in test_estimate_token_count
+    ???
+E   TypeError: ContextModel.estimate_token_count() missing 1 required positional argument: 'text'
+______________ TestContextModel.test_create_budget_with_reduction ______________
+/voc/work/cd14715-claude-code-classroom/python-harness/tests/test_context_strategy.py:93: in test_create_budget_with_reduction
+    ???
+E   AssertionError: assert 55.00000000000001 == 55.0
+E    +  where 55.00000000000001 = TokenBudget(baseline_tokens=10000, optimized_tokens=4500, reduction_percentage=55.00000000000001, components={'summarized': ['docs'], 'preserved': ['errors']}).reduction_percentage
+_______ TestContextStrategyHarness.test_calculate_budget_shows_reduction _______
+/voc/work/cd14715-claude-code-classroom/python-harness/tests/test_context_strategy.py:232: in test_calculate_budget_shows_reduction
+    ???
+E   AssertionError: assert 1250 > 1298
+E    +  where 1250 = TokenBudget(baseline_tokens=1250, optimized_tokens=1298, reduction_percentage=-3.84, components={'summarized': ['module_docs'], 'preserved': ['critical_paths']}).baseline_tokens
+E    +  and   1298 = TokenBudget(baseline_tokens=1250, optimized_tokens=1298, reduction_percentage=-3.84, components={'summarized': ['module_docs'], 'preserved': ['critical_paths']}).optimized_tokens
+__________________ TestContextOptimizer.test_add_raw_context ___________________
+/voc/work/cd14715-claude-code-classroom/python-harness/tests/test_context_strategy.py:323: in test_add_raw_context
+    ???
+E   assert -2.1333333333333333 > 0
+=========================== short test summary info ============================
+FAILED tests/test_context_strategy.py::TestContextModel::test_apply_summarization_full_preserve
+FAILED tests/test_context_strategy.py::TestContextModel::test_apply_summarization_light_summary
+FAILED tests/test_context_strategy.py::TestContextModel::test_apply_summarization_aggressive_summary
+FAILED tests/test_context_strategy.py::TestContextModel::test_estimate_token_count
+FAILED tests/test_context_strategy.py::TestContextModel::test_create_budget_with_reduction
+FAILED tests/test_context_strategy.py::TestContextStrategyHarness::test_calculate_budget_shows_reduction
+FAILED tests/test_context_strategy.py::TestContextOptimizer::test_add_raw_context
+======================== 7 failed, 22 passed in 17.46s =========================

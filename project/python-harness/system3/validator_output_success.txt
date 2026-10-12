@@ -1,0 +1,30 @@
+Configuration Validation Report
+==============================
+
+.claude/ Directory: ✓ Found
+
+CLAUDE.md Validation:
+  - File exists: ✓
+  - Has @path imports: ✓
+  - Imports found:
+    * @.claude/standards/api.md ✓
+    * @.claude/standards/testing.md ✓
+    * @.claude/standards/security.md ✓
+
+Rules Validation:
+  - python-style.md:
+    * YAML frontmatter: ✓
+    * Glob patterns: ✓
+      - src/**/*.py
+      - tests/**/*.py
+    * Priority: high
+    * Enabled: true
+
+Skills Validation:
+  - project-review/SKILL.md:
+    * Fork context: ✓
+    * Allowed tools: Read, Grep, Glob ✓
+    * Read-only tools: ✓
+
+Status: OK
+Exit Code: 0

@@ -165,7 +165,7 @@ class ContextStrategyHarness:
         try:
             # Use Claude to attempt to answer the question
             response = self.client.messages.create(
-                model="claude-3-5-sonnet-20241022",
+                model="claude-3-5-sonnet-20240620",
                 max_tokens=512,
                 messages=[{
                     "role": "user",

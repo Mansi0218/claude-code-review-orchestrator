@@ -1,0 +1,6 @@
+{"question_id": "Q1", "question": "What are the critical execution paths in the system?", "answered_correctly": false, "confidence": 0.25, "variant": "control", "answer_snippet": "INSUFFICIENT_CONTEXT - critical paths information not available in context"}
+{"question_id": "Q2", "question": "What common error patterns should be monitored?", "answered_correctly": false, "confidence": 0.28, "variant": "control", "answer_snippet": "INSUFFICIENT_CONTEXT - error patterns not detailed in available context"}
+{"question_id": "Q3", "question": "Summarize the recent change history", "answered_correctly": true, "confidence": 0.65, "variant": "control", "answer_snippet": "Some version history mentioned but details sparse"}
+{"question_id": "Q4", "question": "What modules are documented?", "answered_correctly": true, "confidence": 0.62, "variant": "control", "answer_snippet": "Module names present but documentation summaries removed"}
+{"question_id": "Q5", "question": "Describe the API reference structure", "answered_correctly": true, "confidence": 0.58, "variant": "control", "answer_snippet": "Basic architecture mentioned but details lacking"}
+{"question_id": "Q6", "question": "What is the test coverage status?", "answered_correctly": true, "confidence": 0.55, "variant": "control", "answer_snippet": "Test counts mentioned but no context on coverage"}
