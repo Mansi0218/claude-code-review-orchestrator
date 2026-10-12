@@ -138,6 +138,40 @@ class DefectOrchestrator:
             "created_at": fork.created_at.isoformat()
         }
 
+    def fork_for_hypothesis(self, hypothesis_id: str, hypothesis_description: str) -> Dict[str, Any]:
+        """
+        Create an isolated fork to test a hypothesis without affecting main state
+
+        This allows safe experimentation:
+        - Fork gets copy of current hot-state
+        - Changes in fork don't affect parent
+        - Can be discarded or merged based on results
+
+        Args:
+            hypothesis_id: Unique identifier for the hypothesis
+            hypothesis_description: Description of what's being tested
+
+        Returns:
+            Fork information including isolation status
+        """
+        fork_id = f"hypothesis_{hypothesis_id}"
+        fork = self.harness.create_fork(fork_id)
+
+        # Verify isolation
+        hot_state = self.harness.load_hot_state()
+        is_isolated = StateModel.ensure_fork_isolation(fork, hot_state)
+
+        return {
+            "fork_id": fork_id,
+            "hypothesis_id": hypothesis_id,
+            "hypothesis_description": hypothesis_description,
+            "parent_session": self.session_id,
+            "fork_session": fork.isolated_state.session_id,
+            "is_isolated": is_isolated,
+            "created_at": fork.created_at.isoformat(),
+            "can_be_discarded_safely": True
+        }
+
     def get_statistics(self) -> Dict[str, Any]:
         """Get processing statistics"""
         hot_state = self.harness.load_hot_state()

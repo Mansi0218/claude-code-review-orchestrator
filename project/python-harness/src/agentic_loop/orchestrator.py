@@ -4,8 +4,10 @@ End-to-end claim processing workflow coordinating Model and Harness layers.
 Located at: src/agentic_loop/orchestrator.py:12-45
 """
 
+import os
 from pathlib import Path
 from typing import List, Optional
+from anthropic import Anthropic
 from .model import AgentModel, Claim, RoutingDecision, StopReason
 from .harness import AgenticLoopHarness
 from .model import LoopTrace
@@ -32,6 +34,7 @@ class ClaimProcessor:
         self.harness = AgenticLoopHarness(output_dir)
         self.model = AgentModel()
         self.max_turns = max_turns
+        self.client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
     def process_claim(self, claim: Claim) -> RoutingDecision:
         """
@@ -39,7 +42,7 @@ class ClaimProcessor:
 
         This demonstrates the full loop:
         1. Start conversation
-        2. Execute turns with simulated API responses
+        2. Execute turns with real Claude API calls
         3. Check stop_reason after each turn
         4. Continue on tool_use, terminate on end_turn
         5. Produce routing decision or escalation
@@ -50,10 +53,16 @@ class ClaimProcessor:
         # Start trace
         trace = self.harness.start_claim_processing(claim)
 
+        # Build conversation messages
+        messages = [{
+            "role": "user",
+            "content": f"Process claim {claim.claim_id}: {claim.description}. Analyze the claim amount (${claim.amount}) and type ({claim.claim_type.value}) to determine the appropriate processing tier."
+        }]
+
         # Initial user turn
         self.harness.execute_turn(
             trace,
-            content=f"Process claim {claim.claim_id}: {claim.description}",
+            content=messages[0]["content"],
             role="user"
         )
 
@@ -62,16 +71,56 @@ class ClaimProcessor:
         while turn_count < self.max_turns:
             turn_count += 1
 
-            # Simulate agent response
-            stop_reason = self.model.simulate_stop_reason(turn_count, max_turns=5)
+            # Make real API call to Claude
+            response = self.client.messages.create(
+                model="claude-3-5-sonnet-20241022",
+                max_tokens=1024,
+                messages=messages,
+                tools=[
+                    {
+                        "name": "get_claim_history",
+                        "description": "Get historical data for similar claims",
+                        "input_schema": {
+                            "type": "object",
+                            "properties": {
+                                "claim_id": {"type": "string"}
+                            }
+                        }
+                    },
+                    {
+                        "name": "check_policy",
+                        "description": "Check policy coverage details",
+                        "input_schema": {
+                            "type": "object",
+                            "properties": {
+                                "policy_id": {"type": "string"}
+                            }
+                        }
+                    }
+                ]
+            )
 
-            # Simulate tool use or final response
-            if stop_reason == StopReason.TOOL_USE:
-                content = f"Analyzing claim data... (turn {turn_count})"
-                tool_calls = ["get_claim_history", "check_policy"]
+            # Extract stop_reason from response
+            stop_reason_value = response.stop_reason
+            if stop_reason_value == "tool_use":
+                stop_reason = StopReason.TOOL_USE
+            elif stop_reason_value == "end_turn":
+                stop_reason = StopReason.END_TURN
+            elif stop_reason_value == "max_tokens":
+                stop_reason = StopReason.MAX_TOKENS
             else:
-                content = f"Analysis complete. Routing claim to appropriate tier."
-                tool_calls = []
+                stop_reason = StopReason.END_TURN
+
+            # Extract content and tool calls
+            content_parts = []
+            tool_calls = []
+            for block in response.content:
+                if block.type == "text":
+                    content_parts.append(block.text)
+                elif block.type == "tool_use":
+                    tool_calls.append(block.name)
+
+            content = " ".join(content_parts) if content_parts else f"Processing claim (turn {turn_count})"
 
             # Execute turn
             self.harness.execute_turn(
@@ -82,9 +131,31 @@ class ClaimProcessor:
                 tool_calls=tool_calls
             )
 
+            # Add assistant message to conversation
+            messages.append({
+                "role": "assistant",
+                "content": response.content
+            })
+
             # Check termination (this is the key decision point)
             if self.harness.check_termination(trace):
                 break
+
+            # If tool use, provide tool results
+            if stop_reason == StopReason.TOOL_USE:
+                tool_results = []
+                for block in response.content:
+                    if block.type == "tool_use":
+                        tool_results.append({
+                            "type": "tool_result",
+                            "tool_use_id": block.id,
+                            "content": f"Tool {block.name} executed successfully"
+                        })
+
+                messages.append({
+                    "role": "user",
+                    "content": tool_results
+                })
 
         # Generate routing decision
         decision = self.model.route_claim(claim)

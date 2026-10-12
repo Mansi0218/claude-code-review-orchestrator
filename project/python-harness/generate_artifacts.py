@@ -101,38 +101,95 @@ def generate_context_strategy_artifacts():
 
     optimizer = ContextOptimizer(output_dir)
 
-    # Add large context blocks
+    # Add realistic context blocks without artificial inflation
     content_blocks = {
         ContentType.MODULE_DOCS: """
-        Module Documentation (Lengthy Content):
-        The system provides comprehensive claim processing capabilities including
-        automated routing, tier classification, and escalation handling. It supports
-        multiple claim types (medical, automotive, property, liability) with
-        configurable thresholds and business rules. The architecture follows a
-        clean separation between Model, Harness, and Orchestration layers...
-        """ * 50,  # Repeat to create large block
+        Module Documentation:
+
+        The harness engineering system provides comprehensive claim processing capabilities including
+        automated routing, tier classification, and escalation handling. It supports multiple claim
+        types (medical, automotive, property, liability, workers compensation) with configurable
+        thresholds and business rules.
+
+        Architecture:
+        The system follows a clean three-layer architecture:
+        - Model Layer: Core data structures, validation logic, and business rules
+        - Harness Layer: Execution control, trace management, and artifact generation
+        - Orchestration Layer: End-to-end workflow coordination and system integration
+
+        Key Components:
+        - AgenticLoopHarness: Manages conversation turns and stop_reason checking
+        - ContextStrategyHarness: Handles context optimization and token budgeting
+        - ConfigValidator: Validates YAML configuration and Claude Code setup
+        - DefectOrchestrator: Manages tiered state (hot/warm/cold) and shift processing
+
+        Design Patterns:
+        - Model-Harness-Orchestrator separation ensures testability
+        - Pydantic models provide type safety and validation
+        - SQLAlchemy enables persistent cold storage
+        - JSON files provide lightweight hot-state serialization
+        """,
 
         ContentType.CHANGE_HISTORY: """
-        Recent Changes:
-        - v1.5.0: Added support for workers compensation claims
-        - v1.4.2: Fixed routing logic for edge cases
-        - v1.4.1: Performance improvements in SQL queries
-        - v1.4.0: Implemented tiered state management
-        """ * 25,  # Repeat to create large block
+        Version History:
+
+        v1.5.0 (2026-10-09):
+        - Added support for workers compensation claims
+        - Implemented fork_for_hypothesis in orchestration system
+        - Enhanced state staleness detection with configurable thresholds
+
+        v1.4.2 (2026-09-15):
+        - Fixed routing logic for edge cases in tier determination
+        - Improved error handling for invalid claim types
+        - Added retry logic for database connection failures
+
+        v1.4.1 (2026-08-22):
+        - Performance improvements in SQL query execution
+        - Optimized hot-state serialization for large sessions
+        - Reduced token overhead in context assembly
+
+        v1.4.0 (2026-07-30):
+        - Implemented tiered state management (hot/warm/cold)
+        - Added SQL filtering for shift-based defect processing
+        - Introduced session forking for isolated investigations
+
+        v1.3.5 (2026-06-18):
+        - Enhanced configuration validation with exit codes
+        - Added YAML frontmatter support for path-scoped rules
+        - Implemented fork context for project-review skill
+        """,
 
         ContentType.CRITICAL_PATHS: """
         Critical Execution Paths:
-        1. Claim validation -> Tier determination -> Routing decision
-        2. State recovery -> Hot-state check -> Resume vs Rebuild
-        3. SQL filtering -> Defect slicing -> Shift processing
+
+        1. Claim Processing Flow:
+           Claim validation -> Tier determination -> Routing decision
+           Priority check -> Escalation logic -> Final decision
+
+        2. State Recovery Flow:
+           Session start -> Hot-state check -> Staleness assessment
+           If stale: SQL rebuild -> Warm tier loading
+           If fresh: Resume from hot-state
+
+        3. Shift Processing Flow:
+           SQL filtering -> Defect slicing -> Batch processing
+           Priority ordering -> Status updates -> Result aggregation
+
+        4. Configuration Validation:
+           YAML parsing -> Frontmatter extraction -> Path pattern matching
+           @import resolution -> Skill validation -> Exit code generation
         """,
 
         ContentType.ERROR_PATTERNS: """
         Common Error Patterns:
-        - Stale state detection triggers SQL rebuild
-        - Invalid claim types raise ValueError
+
+        - Stale state detection (>7 days) triggers SQL rebuild from cold storage
+        - Invalid claim types raise ValueError with clear error messages
         - Missing configuration files trigger FileNotFoundError
-        - Database connection errors handled with retry logic
+        - Database connection errors handled with exponential backoff retry logic
+        - Max tokens exceeded during agentic loop triggers graceful termination
+        - Malformed YAML frontmatter logged as warning, uses defaults
+        - Fork isolation failures rollback to parent session state
         """
     }
 

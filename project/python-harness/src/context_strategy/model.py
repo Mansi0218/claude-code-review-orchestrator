@@ -4,9 +4,11 @@ Token counting, context optimization strategies, and evaluation models.
 Located at: src/context_strategy/model.py:12-78
 """
 
+import os
 from typing import List, Dict, Any, Optional
 from pydantic import BaseModel, Field
 from enum import Enum
+from anthropic import Anthropic
 
 
 class ContentType(str, Enum):
@@ -67,13 +69,21 @@ class ContextBlock(BaseModel):
     original_tokens: int = 0
     summarized_tokens: int = 0
 
-    def calculate_tokens(self):
-        """Estimate token count (rough approximation: 1 token ~= 4 chars)"""
-        self.original_tokens = len(self.original_content) // 4
-        if self.summarized_content:
-            self.summarized_tokens = len(self.summarized_content) // 4
+    def calculate_tokens(self, model: Optional['ContextModel'] = None):
+        """Calculate token count using ContextModel or fallback approximation"""
+        if model:
+            self.original_tokens = model.estimate_token_count(self.original_content)
+            if self.summarized_content:
+                self.summarized_tokens = model.estimate_token_count(self.summarized_content)
+            else:
+                self.summarized_tokens = self.original_tokens
         else:
-            self.summarized_tokens = self.original_tokens
+            # Fallback to approximation
+            self.original_tokens = len(self.original_content) // 4
+            if self.summarized_content:
+                self.summarized_tokens = len(self.summarized_content) // 4
+            else:
+                self.summarized_tokens = self.original_tokens
 
 
 class ContextModel:
@@ -96,6 +106,10 @@ class ContextModel:
         ContentType.CHANGE_HISTORY
     }
 
+    def __init__(self):
+        """Initialize with Anthropic client for token counting"""
+        self.client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+
     @staticmethod
     def determine_strategy(content_type: ContentType) -> SummarizationStrategy:
         """
@@ -111,30 +125,48 @@ class ContextModel:
 
         return SummarizationStrategy.LIGHT_SUMMARY
 
-    @staticmethod
-    def apply_summarization(content: str, strategy: SummarizationStrategy) -> str:
+    def apply_summarization(self, content: str, strategy: SummarizationStrategy) -> str:
         """
-        Apply summarization strategy to content
+        Apply summarization strategy to content using Claude API
 
-        Simulates summarization by reducing content length
+        Uses actual Claude API to generate summaries at different compression levels
         """
         if strategy == SummarizationStrategy.FULL_PRESERVE:
             return content
 
-        # Simulate summarization by extracting key points
-        lines = content.split('\n')
-
+        # Determine compression level
         if strategy == SummarizationStrategy.LIGHT_SUMMARY:
-            # Keep 50% of lines
-            return '\n'.join(lines[::2])
-
+            compression_target = "50%"
+            instruction = "Provide a moderate summary preserving key details"
         elif strategy == SummarizationStrategy.AGGRESSIVE_SUMMARY:
-            # Keep 25% of lines
-            return '\n'.join(lines[::4])
-
+            compression_target = "25%"
+            instruction = "Provide an aggressive summary with only essential information"
         else:  # KEY_POINTS_ONLY
-            # Keep 10% of lines
-            return '\n'.join(lines[::10]) if len(lines) >= 10 else lines[0] if lines else ""
+            compression_target = "10%"
+            instruction = "Extract only the key points in a very concise format"
+
+        # Use Claude to generate summary
+        try:
+            response = self.client.messages.create(
+                model="claude-3-5-sonnet-20241022",
+                max_tokens=2048,
+                messages=[{
+                    "role": "user",
+                    "content": f"{instruction}, targeting approximately {compression_target} of the original length:\n\n{content}"
+                }]
+            )
+
+            summary = response.content[0].text
+            return summary
+        except Exception as e:
+            # Fallback to simple line-based summarization if API call fails
+            lines = content.split('\n')
+            if strategy == SummarizationStrategy.LIGHT_SUMMARY:
+                return '\n'.join(lines[::2])
+            elif strategy == SummarizationStrategy.AGGRESSIVE_SUMMARY:
+                return '\n'.join(lines[::4])
+            else:
+                return '\n'.join(lines[::10]) if len(lines) >= 10 else lines[0] if lines else ""
 
     @staticmethod
     def create_persistent_facts_block(facts: List[str]) -> str:
@@ -149,14 +181,19 @@ class ContextModel:
 
         return header + facts_str + footer
 
-    @staticmethod
-    def estimate_token_count(text: str) -> int:
+    def estimate_token_count(self, text: str) -> int:
         """
-        Estimate token count for text
+        Count tokens for text using Anthropic API
 
-        Rough approximation: 1 token ~= 4 characters
+        Uses actual token counting from the Anthropic API
         """
-        return len(text) // 4
+        try:
+            # Use Anthropic's token counting
+            token_count = self.client.count_tokens(text)
+            return token_count
+        except Exception as e:
+            # Fallback to approximation if API call fails
+            return len(text) // 4
 
     @staticmethod
     def create_budget(baseline: int, optimized: int, components: Dict[str, Any]) -> TokenBudget:
